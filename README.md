@@ -1,84 +1,41 @@
-Extract all words from tamil wikipedia dump.
+This script helps create a long wordlist from the Wikimedia dump where articles of the Odia-language Wikipedia, word entries of the Odia Wiktionary and texts of the Odia Wikisource are uploaded on a regular basis for community use and research. A wordlist is generally used for a range of research Natural Language Processing (NLP). Some common use cases of a wordlist includes creating a spell-check engine (or predictive text for helping with input on mobile devices), dictionary or even recording pronunciation of words in a language. The [original script](https://github.com/tshrinivasan/tamil-wikipedia-word-list) was written by our friend T. Shrinivasan which he then guided OFDN's Subhashish Panigrahi during a session for accomodating the needs of Odia. 
 
-Get the wikipedia dump from the following url
-http://dumps.wikimedia.org/tawiki/latest/
+# Step 1: Download data dump
 
-tawiki-latest-pages-articles.xml.bz2   
+Download the Wikimedia dumps. You can find all latest dumps from [this link](https://dumps.wikimedia.org/backup-index.html) (look up for "orwiki" for Odia Wikipedia, "orwiktionary" for Odia Wiktionary and "orwikisource" for Odia Wikisource).
 
-extract it using the following command.
+Alternatively, you can also download specific files for each project (for inatance, you want to download only the titles of Odia Wikipedia and not the content of all the articles or just the category names). Check [here](https://dumps.wikimedia.org/orwiki/) for Odia Wikipedia, [here](https://dumps.wikimedia.org/orwikisource/) for Odia Wikisource, [here](https://dumps.wikimedia.org/orwiktionary/) for Odia Wiktionary. The folder name "latest" will show you the latest dump and above that folder link you can find some recent historical dumps.
 
-bunzip2  tawiki-latest-pages-articles.xml.tar.bz2
+# Step 2: Extract XML file
 
-
-
-
-##### To remove all english charecters
+We are using the example of Odia Wikipedia below on a Unix computer (Linux and MacOS included) but the same process applies for a file from any other Wikimedia project. In case you are visiting the folder link as explained above, you could see the explainatory file names such as "orwiki-latest-pages-articles-multistream.xml.bz2". Download the file from the directory and extract/unzip. You can use the below command line by opening your computer terminal (On MacOS press Cmd+Space bar >> type "terminal" >> Enter).
 
 ```
-tr  [:graph:]  ' ' < tawiki-latest-pages-articles.xml > all.tr
+bunzip2  orwiki-latest-pages-articles-multistream.xml.bz2
 ```
 
+# Remove all English (Latin) characters that are not required
+To create a wordlist you will need to have Python installed (mostly pre-installed in most modern Unix computers). You need to download and extract this Github repository either by using command line or as a [ZIP file](https://github.com/ofdn/odia-wordlist-from-wikimedia-dump/archive/refs/heads/master.zip). Once unzipped copy the file called "create_wordlist.py" to the folder where you have the Wikimedia data dump. 
 
-##### To remove all symbols
-
-```
-tr  "\012\015\041\042\043\044\045\046\047\050\051\053\054\055\056\057\060\061\062\06<200c><200b>3\064\065\066\067\070\071\073\074\075\076\077\100\101\102\103\104\105\106\107\110\<200c><200b>111\112\113\114\115\116\117\120\121\122\123\124\125\126\127\130\131\132\133\135\1<200c><200b>40\173\174\175" '\n' < all.tr > all.tr1
-```
-
-##### To remove leading spaces and blank lines
-```
-cat all.tr1 | sed -e 's/^[ \t]*//' | grep -v ^$ > all.trim
-```
-
-
-
-
-##### shell script to  seperate the words
+Run on terminal
 
 ```
-cat line.sh 
-#!/bin/bash 
-for WORD in `cat all.trim` 
-do 
-    echo $WORD 
-done 
+python create_wordlist.py 
 ```
 
-
-Run the script
-```
-sh ./line.sh > words
-```
-
-##### Get unique tamil words
-find_tamil.py script searches for only tamil words and stores the unique tamil words to the file 'only_uniq_tamil_words.txt'
+## BONUS: Count the total number of unique words
 
 ```
-python find_tamil.py 
+wc -l unique_odia_words.txt
+1200 unique_odia_words.txt
 ```
-
-
-
-
-##### count the number of words available
-
-```
-wc -l only_uniq_tamil_words.txt
-1197913 only_uniq_tamil_words.txt
-```
-
-
-Now you can delete all the temporary files all.tr, all.tr1, all.trim, words and tawiki-latest-pages-articles.xml
-
 
 ##### sort the words
 
 If you want to sort the words, run the below command.
 
 ```
-sort only_uniq_tamil_words.txt > only_tamil_uniq_sorted_words.txt
+sort unique_odia_words.txt > unique_odia_sorted_words.txt
 ```
 
-This will sort the words and store in the file sorted_words.txt
-
-
+This will sort the words in the file "unique_odia_sorted_words.txt".
