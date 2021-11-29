@@ -6,13 +6,18 @@ Download the Wikimedia dumps. You can find all latest dumps from [this link](htt
 
 Alternatively, you can also download specific files for each project (for inatance, you want to download only the titles of Odia Wikipedia and not the content of all the articles or just the category names). Check [here](https://dumps.wikimedia.org/orwiki/) for Odia Wikipedia, [here](https://dumps.wikimedia.org/orwikisource/) for Odia Wikisource, [here](https://dumps.wikimedia.org/orwiktionary/) for Odia Wiktionary. The folder name "latest" will show you the latest dump and above that folder link you can find some recent historical dumps.
 
+After downloading, keep the file in a specific folder.
+
 # Step 2: Extract XML file
 
 We are using the example of Odia Wikipedia below on a Unix computer (Linux and MacOS included) but the same process applies for a file from any other Wikimedia project. In case you are visiting the folder link as explained above, you could see the explainatory file names such as "orwiki-latest-pages-articles-multistream.xml.bz2". Download the file from the directory and extract/unzip. You can use the below command line by opening your computer terminal (On MacOS press Cmd+Space bar >> type "terminal" >> Enter).
 
+Navigate to the specific folder where you have saved the dump file. If you have kept it in the "Wiki" subfolder inside the "Documents" folder the type in the terminal ```cd Documents/Wiki``` and press Enter if you are in the root folder. You can also type ```pwd``` to see which folder you are in when unsure. Typing ```cd ..``` and pressing Enter takes you one folder up.
+
 ```
 bunzip2  orwiki-latest-pages-articles-multistream.xml.bz2
 ```
+This will create a new file called "orwiki-latest-pages-articles-multistream.xml". Rename that to "orwiki.xml" (use command ```mv orwiki-latest-pages-articles-multistream.xml orwiki.xml```)
 
 # Remove all English (Latin) characters that are not required
 To create a wordlist you will need to have Python installed (mostly pre-installed in most modern Unix computers). You need to download and extract this Github repository either by using command line or as a [ZIP file](https://github.com/ofdn/odia-wordlist-from-wikimedia-dump/archive/refs/heads/master.zip). Once unzipped copy the file called "create_wordlist.py" to the folder where you have the Wikimedia data dump. 
