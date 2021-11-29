@@ -28,16 +28,16 @@ Run on terminal
 python create_wordlist.py 
 ```
 
-## BONUS: Count the total number of unique words
+## BONUS 1: Count the total number of unique words
 
 ```
 wc -l unique_odia_words.txt
-1200 unique_odia_words.txt
 ```
+This will show a result such as ```1200 unique_odia_words.txt```.
 
-##### sort the words
+##### Sort the words alphabetically
 
-If you want to sort the words, run the below command.
+Run the command
 
 ```
 sort unique_odia_words.txt > unique_odia_sorted_words.txt
